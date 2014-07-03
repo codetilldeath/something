@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 
 public class DesktopRobo {
 	URI uri;
+	/*Default url set with eyny*/
 	public DesktopRobo() {
 		// TODO Auto-generated constructor stub
 		try {
