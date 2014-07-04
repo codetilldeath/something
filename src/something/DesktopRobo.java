@@ -7,7 +7,9 @@ import java.net.URISyntaxException;
 
 public class DesktopRobo {
 	URI uri;
-	/*Default url set with eyny*/
+	/*
+	 * Default url set with eyny
+	 * */
 	public DesktopRobo() {
 		// TODO Auto-generated constructor stub
 		try {
@@ -17,9 +19,15 @@ public class DesktopRobo {
 			e.printStackTrace();
 		}
 	}
+	/*
+	 * Custom constructor with url
+	 * */
 	public DesktopRobo(URI uri){
 		this.uri = uri;
 	}
+	/*
+	 * Execute browsing url
+	 * */
 	void OpenUrl() throws URISyntaxException{
 		if(Desktop.isDesktopSupported())
 		{
@@ -27,7 +35,7 @@ public class DesktopRobo {
 			Desktop.getDesktop().browse(uri);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error browsing url");
 		}
 		}
 	}
