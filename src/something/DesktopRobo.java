@@ -71,51 +71,116 @@ public class DesktopRobo {
 		}
 		return true;
 	}
+
 	/**
 	 * Ping particular ip address
-	 * @throws IOException 
-	 * @throws InterruptedException 
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	private boolean PingIP() throws IOException, InterruptedException{
+	private boolean PingIP() throws IOException, InterruptedException {
 		String command = "ping -c 3 " + strUrl;
-        Process proc = Runtime.getRuntime().exec(command);
-        BufferedReader reader = 
-            new BufferedReader(new InputStreamReader(proc.getInputStream()));
-        String line = "";
-        while((line = reader.readLine()) != null) {
-            System.out.print(line + "\n");
-        }
-        proc.waitFor();
-        return true;
+		Process proc = Runtime.getRuntime().exec(command);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				proc.getInputStream()));
+		String line = "";
+		while ((line = reader.readLine()) != null) {
+			System.out.print(line + "\n");
+		}
+		proc.waitFor();
+		return true;
 	}
+
 	/**
 	 * Get local IP address
-	 * @throws IOException 
-	 * @throws InterruptedException 
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	private boolean IpStat() throws IOException, InterruptedException{
+	private boolean IpStat() throws IOException, InterruptedException {
 		String command = "ifconfig";
 		Process proc = Runtime.getRuntime().exec(command);
-        BufferedReader reader = 
-            new BufferedReader(new InputStreamReader(proc.getInputStream()));
-        String line = "";
-        while((line = reader.readLine()) != null) {
-            System.out.print(line + "\n");
-        }
-        proc.waitFor();
-        return true;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				proc.getInputStream()));
+		String line = "";
+		while ((line = reader.readLine()) != null) {
+			System.out.print(line + "\n");
+		}
+		proc.waitFor();
+		return true;
 	}
 	/**
-	 * @throws InterruptedException 
-	 * @throws IOException 
-	 * @throws URISyntaxException 
 	 * 
 	 */
-	public boolean inputCommand(String c) throws IOException, InterruptedException, URISyntaxException{
+	private void info(){
+		System.out.println("Develop by HR Wu\n2014/7/10");
+	}
+
+	/**
+	 * Print Hi in star.
+	 */
+	private void printHi() {
+		for (int i = 1; i <= 10; i++) {
+			if (i == 1 || i == 4) {
+				for (int j = 1; j <= 18; j++) {
+					if (j == 1 || j == 2 || j == 11 || j == 12) {
+						System.out.print("*");
+					} else {
+						System.out.print(" ");
+					}
+				}
+				System.out.println("");
+			} else if (i == 2 || i == 3 || i == 7 || i == 8 || i == 9
+					|| i == 10) {
+				for (int j = 1; j <= 18; j++) {
+					if (j == 1 || j == 2 || j == 11 || j == 12 || j == 17
+							|| j == 18) {
+						System.out.print("*");
+					} else {
+						System.out.print(" ");
+					}
+				}
+				System.out.println("");
+			} else {
+				for (int j = 1; j <= 18; j++) {
+					if (j == 13 || j == 14 || j == 15 || j == 16) {
+						System.out.print(" ");
+					} else {
+						System.out.print("*");
+					}
+				}
+				System.out.println("");
+			}
+		}
+	}
+
+	/**
+	 * List all commands
+	 */
+	private void printCom() {
+		System.out.println("Commands: info, help, local ip, ping, get cookie.");
+	}
+
+	/**
+	 * To call sub function of DesktopRobo.
+	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * 
+	 */
+	public boolean inputCommand(String c) throws IOException,
+			InterruptedException, URISyntaxException {
 		String url;
-		switch(c){
+		switch (c) {
+		case "info":
+			info();
+			return true;
+		case "hi":
+			printHi();
+			return true;
 		case "help":
-			System.out.println("Commands:help, local ip, ping, get cookie.");
+			printCom();
 			return true;
 		case "local ip":
 			return IpStat();
