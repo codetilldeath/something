@@ -26,32 +26,17 @@ public class DesktopRobo {
 	CookieManager mCookieManager;
 	Object mObject;
 	CookieStore mCookieStore;
+	String command;
 
 	/**
-	 * Construct Dektop Robot Object. Construct with input URL.
+	 * Construct Desktop Robot Object. Construct with input URL.
 	 * 
 	 * @throws IOException
 	 */
-	public DesktopRobo(String url) throws IOException {
-		// TODO Auto-generated constructor stub
-		strUrl = url.substring(7);
-		try {
-			this.uri = new URI(url);
-			this.url = new URL(url);
-			this.mCookieManager = new CookieManager();
-			mCookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-			CookieHandler.setDefault(mCookieManager);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Custom constructor with url
-	 */
-	public DesktopRobo(URI uri) {
-		this.uri = uri;
+	public DesktopRobo() throws IOException {
+		this.mCookieManager = new CookieManager();
+		mCookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+		CookieHandler.setDefault(mCookieManager);
 	}
 
 	/**
@@ -71,7 +56,7 @@ public class DesktopRobo {
 	/**
 	 * Get cookies
 	 */
-	public void GetCookie() throws IOException {
+	private boolean GetCookie() throws IOException {
 		mURLConnection = url.openConnection();
 		mObject = mURLConnection.getContent();
 		mCookieStore = mCookieManager.getCookieStore();
@@ -84,13 +69,14 @@ public class DesktopRobo {
 			// System.out.println(cookie.getValue());
 			System.out.println("Value: " + cookie);
 		}
+		return true;
 	}
 	/**
 	 * Ping particular ip address
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void PingIP() throws IOException, InterruptedException{
+	private boolean PingIP() throws IOException, InterruptedException{
 		String command = "ping -c 3 " + strUrl;
         Process proc = Runtime.getRuntime().exec(command);
         BufferedReader reader = 
@@ -100,13 +86,14 @@ public class DesktopRobo {
             System.out.print(line + "\n");
         }
         proc.waitFor();
+        return true;
 	}
 	/**
 	 * Get local IP address
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void IpStat() throws IOException, InterruptedException{
+	private boolean IpStat() throws IOException, InterruptedException{
 		String command = "ifconfig";
 		Process proc = Runtime.getRuntime().exec(command);
         BufferedReader reader = 
@@ -116,5 +103,41 @@ public class DesktopRobo {
             System.out.print(line + "\n");
         }
         proc.waitFor();
+        return true;
+	}
+	/**
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * @throws URISyntaxException 
+	 * 
+	 */
+	public boolean inputCommand(String c) throws IOException, InterruptedException, URISyntaxException{
+		String url;
+		switch(c){
+		case "help":
+			System.out.println("Commands:help, local ip, ping, get cookie.");
+			return true;
+		case "local ip":
+			return IpStat();
+		case "ping":
+			System.out.print("Enter url:");
+			url = "http://"
+					+ new BufferedReader(new InputStreamReader(System.in))
+							.readLine();
+			strUrl = url.substring(7);
+			return PingIP();
+		case "get cookie":
+			System.out.print("Enter url:");
+			url = "http://"
+					+ new BufferedReader(new InputStreamReader(System.in))
+							.readLine();
+			this.url = new URL(url);
+			return GetCookie();
+		case "quit":
+			System.out.print("Shut down");
+			System.exit(0);
+		default:
+			return true;
+		}
 	}
 }
