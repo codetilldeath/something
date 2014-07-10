@@ -19,17 +19,16 @@ import java.util.List;
  * Virtual robot for desktop helping
  */
 public class DesktopRobo {
-	String strUrl;
-	URI uri;
-	URL url;
-	URLConnection mURLConnection;
-	CookieManager mCookieManager;
-	Object mObject;
-	CookieStore mCookieStore;
-	String command;
+	private String strUrl;
+	private URI uri;
+	private URL url;
+	private URLConnection mURLConnection;
+	private CookieManager mCookieManager;
+	private CookieStore mCookieStore;
+	private String command;
 
 	/**
-	 * Construct Desktop Robot Object. Construct with input URL.
+	 * Construct Desktop Robot Object.
 	 * 
 	 * @throws IOException
 	 */
@@ -58,7 +57,7 @@ public class DesktopRobo {
 	 */
 	private boolean GetCookie() throws IOException {
 		mURLConnection = url.openConnection();
-		mObject = mURLConnection.getContent();
+		mURLConnection.getContent();
 		mCookieStore = mCookieManager.getCookieStore();
 		List<HttpCookie> cookies = mCookieStore.getCookies();
 		for (HttpCookie cookie : cookies) {
@@ -79,7 +78,7 @@ public class DesktopRobo {
 	 * @throws InterruptedException
 	 */
 	private boolean PingIP() throws IOException, InterruptedException {
-		String command = "ping -c 3 " + strUrl;
+		command = "ping -c 3 " + strUrl;
 		Process proc = Runtime.getRuntime().exec(command);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				proc.getInputStream()));
@@ -98,7 +97,7 @@ public class DesktopRobo {
 	 * @throws InterruptedException
 	 */
 	private boolean IpStat() throws IOException, InterruptedException {
-		String command = "ifconfig";
+		command = "ifconfig";
 		Process proc = Runtime.getRuntime().exec(command);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				proc.getInputStream()));
@@ -158,7 +157,7 @@ public class DesktopRobo {
 	 * List all commands
 	 */
 	private void printCom() {
-		System.out.println("Commands: info, help, local ip, ping, get cookie.");
+		System.out.println("Commands: info, help, my ip, ping, get cookie.");
 	}
 
 	/**
@@ -182,7 +181,7 @@ public class DesktopRobo {
 		case "help":
 			printCom();
 			return true;
-		case "local ip":
+		case "my ip":
 			return IpStat();
 		case "ping":
 			System.out.print("Enter url:");
