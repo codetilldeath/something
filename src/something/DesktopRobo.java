@@ -92,7 +92,6 @@ public class DesktopRobo {
 
 	/**
 	 * Get local IP address
-	 * 
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
