@@ -26,6 +26,7 @@ public class DesktopRobo {
 	private CookieManager mCookieManager;
 	private CookieStore mCookieStore;
 	private String command;
+	private Process proc;
 
 	/**
 	 * Construct Desktop Robot Object.
@@ -70,6 +71,25 @@ public class DesktopRobo {
 		}
 		return true;
 	}
+	/**
+	 * Capture network data and packet.
+	 * @throws IOException 
+	 * @throws InterruptedException 
+	 */
+	private boolean CapturePacket() throws IOException, InterruptedException{
+//		command = "sudo -s";
+//		Process proc = Runtime.getRuntime().exec(command);
+		command = "tcpdump -i en0 -X -n -c 20";
+		proc = Runtime.getRuntime().exec(command);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				proc.getInputStream()));
+		String line = "";
+		while ((line = reader.readLine()) != null) {
+			System.out.print(line + "\n");
+		}
+		proc.waitFor();
+		return true;
+	}
 
 	/**
 	 * Ping particular ip address
@@ -79,7 +99,7 @@ public class DesktopRobo {
 	 */
 	private boolean PingIP() throws IOException, InterruptedException {
 		command = "ping -c 3 " + strUrl;
-		Process proc = Runtime.getRuntime().exec(command);
+		proc = Runtime.getRuntime().exec(command);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				proc.getInputStream()));
 		String line = "";
@@ -171,6 +191,8 @@ public class DesktopRobo {
 			InterruptedException, URISyntaxException {
 		String url;
 		switch (c) {
+		case "get data":
+			return CapturePacket();
 		case "info":
 			info();
 			return true;

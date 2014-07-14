@@ -11,6 +11,7 @@ public class Practice {
 	private static boolean isFinished = false;
 
 	public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
+		System.out.println("Starting application......");
 		mDesktopRobo = new DesktopRobo();
 		System.out.println("Application initialized");
 		System.out.println("Enter command");
