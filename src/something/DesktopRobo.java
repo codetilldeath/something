@@ -77,9 +77,7 @@ public class DesktopRobo {
 	 * @throws InterruptedException 
 	 */
 	private boolean CapturePacket() throws IOException, InterruptedException{
-//		command = "sudo -s";
-//		Process proc = Runtime.getRuntime().exec(command);
-		command = "tcpdump -i en0 -X -n -c 20";
+		command = "sudo tcpdump -i en0 -X -n -c 20";
 		proc = Runtime.getRuntime().exec(command);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				proc.getInputStream()));
